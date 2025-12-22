@@ -1,0 +1,34 @@
+@startuml
+
+actor Client
+participant "Système Bancaire" as SB
+participant "Système de paiement" as SP
+participant "Service Authentification" as SA
+
+Client -> SB : demanderPaiementCarte(montant)
+activate SB
+
+SB -> SP : initierPaiement(montant, carte)
+activate SP
+
+alt paiement accepté
+    SP --> SB : paiementOK
+
+    opt montant élevé
+        SB -> SA : demanderAuthentificationForte()
+        activate SA
+        SA --> SB : authentificationOK
+        deactivate SA
+    end
+
+    SB --> Client : confirmationPaiement
+
+else paiement refusé
+    SP --> SB : paiementRefuse
+    SB --> Client : paiementRefuse
+end
+
+deactivate SP
+deactivate SB
+
+@enduml

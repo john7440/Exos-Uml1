@@ -1,0 +1,36 @@
+@startuml
+
+abstract class Paiement{
+- montant : double
+- date : Date
+{abstract} effectuerPaiement()
+{abstract} verifierPaiement()
++ annulerPaiement()
+}
+
+class PaiementCarte{
+ - numeroCarte : String
+ - nomTitulaire : String
+ - dateExpiration : String
+ + effectuerPaiement()
+ + verifierPaiement()
+}
+
+class PaiementPaypal{
+- email : String
++ effectuerPaiement()
++ verifierPaiement()
+}
+
+class PaiementCrypto{
+- wallet : String
+- reseau : String
++ effectuerPaiement()
++ verifierPaiement()
+}
+
+Paiement <|-- PaiementCarte
+Paiement <|-- PaiementPaypal
+Paiement <|-- PaiementCrypto
+
+@enduml

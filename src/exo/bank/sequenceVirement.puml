@@ -1,0 +1,41 @@
+@startuml
+
+actor Client
+participant "Système Bancaire" as SB
+participant "ServiceCompte" as SC
+participant "ServiceBeneficiaire" as SBE
+
+Client -> SB : demanderVirement(montant, beneficiaire)
+activate SB
+
+SB -> SBE : verifierBeneficiaire(beneficiaire)
+activate SBE
+
+alt beneficiaire valide
+    SBE --> SB : beneficiaireOK
+    deactivate SBE
+
+    SB -> SC : verifierSolde(montant)
+    activate SC
+
+    alt solde suffisant
+    SC --> SB : soldeOK
+    deactivate SC
+
+    SB --> Client : confirmationVirement
+
+else solde insuffisant
+    SC --> SB : soldeInsuffisant
+    deactivate SC
+    SB --> Client : virementRefuse
+end
+
+else beneficiaire invalide
+    SBE --> SB : beneficiaireInvalide
+    deactivate SBE
+    SB --> Client : virementRefuse
+end
+
+deactivate SB
+
+@enduml

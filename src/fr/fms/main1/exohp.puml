@@ -1,0 +1,36 @@
+@startuml
+
+abstract class Personne{
+- nom : String
+- prenom : String
+- dateNaissance : Date
++ getIdentite()
+}
+
+class PersonnelMedical{
+- matricule : String
+- specialite : String
++ consulter(patient : Patient)
+}
+
+class Patient{
+- numeroDossier: String
+}
+
+class Infirmier{
++ assisterConsultation()
+}
+
+class Consultation{
+- date : Date
+- diagnostic : String
+}
+
+Personne <|-- PersonnelMedical
+Personne <|-- Patient
+PersonnelMedical <|-- Infirmier
+
+Consultation "0..*" -- "1" Patient : concerne
+PersonnelMedical "1" -- "0..*" Consultation: realise
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+
+class Vehicule{
+- marque: String
+- vitesseMax : int
++ demarrer()
++ arreter()
+}
+
+class Voiture{
+- nbPortes : int
++ klaxonner()
+}
+
+class Moto{
+- cylindrée : int
++ faireWheelie()
+}
+
+class Camion{
+ - capaciteChargement : int
+}
+
+class VehiculeElectrique{
+- autonomie : int
++ recharger()
+}
+
+Vehicule <|-- Voiture
+Vehicule <|-- Moto
+Vehicule <|-- Camion
+Vehicule <|-- VehiculeElectrique
+
+@enduml

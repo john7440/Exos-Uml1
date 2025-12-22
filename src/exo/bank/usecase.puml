@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+
+Actor Client
+Actor ConseillerBancaire
+Actor Administrateur
+Actor "Système de paiement" as SP <<Application>>
+
+rectangle "Système Bancaire"{
+usecase "Consulter le solde" as UC1
+usecase "Consulter l'historique des opérations" as UC2
+usecase "Effectuer un virement" as UC3
+usecase "Payer par carte" as UC4
+usecase "Modifier ses informations personnelles" as UC5
+
+usecase "Créer un compte client" as UC6
+usecase "Consulter le dossier d'un client" as UC7
+usecase "Bloquer une carte" as UC8
+usecase "Autoriser un découvert" as UC9
+
+usecase "Gérer les utilisateurs" as UC10
+usecase "Paramétrer le système" as UC11
+
+usecase "Vérifier le solde" as V1
+usecase "Vérifier le bénéficiaire" as V2
+usecase "Authentification forte" as V3
+
+
+Client -- UC1
+Client -- UC2
+Client -- UC3
+Client -- UC4
+Client -- UC5
+
+ConseillerBancaire -- UC6
+ConseillerBancaire -- UC7
+ConseillerBancaire -- UC8
+ConseillerBancaire -- UC9
+
+Administrateur -- UC10
+Administrateur -- UC11
+
+UC3 ..> V1 : <<include>>
+UC3 ..> V2 : <<include>>
+
+UC4 ..> V3 : <<extend>>
+
+SP -- UC4
+
+note right of UC8
+Déclenché après:
+- Carte perdue
+- Carte volée
+end note
+
+note right of V3
+uniquement nécessaire si
+le montant est élevé
+end note
+
+}
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+
+Actor Patient
+Actor PersonnelMedical
+Actor Infirmier
+PersonnelMedical <|- Infirmier
+
+rectangle "Système de gestion de l'hôpital"{
+usecase "Consulter un patient" as UC_1
+usecase "Créer une consultation" as UC_2
+usecase "Renseigner un diagnostic" as UC_3
+usecase "Consulter l'historique d'un Patient" as UC_4
+
+usecase "Consulter son dossier" as UC_5
+usecase "Consulter son historique de consultations" as UC_6
+
+usecase "Assister une consultation" as UC_7
+
+PersonnelMedical -- UC_1
+PersonnelMedical -- UC_2
+PersonnelMedical -- UC_3
+PersonnelMedical -- UC_4
+
+UC_2 .> UC_3 : <<include>>
+
+Patient -- UC_5
+Patient -- UC_6
+
+Infirmier -- UC_7
+}
+@enduml
