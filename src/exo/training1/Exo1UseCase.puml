@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+
+actor Patient
+actor Médecin
+
+rectangle "Système Medi-RendezVous"{
+
+usecase "S'authentifier" as AUTH
+
+usecase "Définir ses disponibilité" as UC1
+usecase "Renseigner sa spécialité" as UC2
+usecase "Confirmer un rendez-vous" as UC3
+
+usecase "Chercher un médecin par spécialité" as UC4
+usecase "Prendre un rendez-vous" as UC5
+usecase "Annuler un rendez-vous" as CANCEL
+
+}
+
+Médecin -- AUTH
+Patient -- AUTH
+
+Médecin -- UC1
+Médecin -- UC2
+Médecin -- UC3
+
+Patient -- UC4
+Patient -- UC5
+Patient -- CANCEL
+
+UC1 ..> AUTH : <<include>>
+UC2 ..> AUTH : <<include>>
+UC3 ..> AUTH : <<include>>
+CANCEL ..>> AUTH : <<include>>
+UC5 ..> AUTH : <<include>>
+
+@enduml

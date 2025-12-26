@@ -1,0 +1,44 @@
+@startuml
+' Pour rendre le diagramme plus joli
+skinparam classAttributeIconSize 0
+
+abstract class Utilisateur{
+  - nom : String
+  - email : String
+  - password : String
+}
+
+class Medecin{
+  - specialite : String
+  - tarif : float
+}
+
+class Patient{
+  - numeroSecu : String
+  - dateDeNaissance : Date
+}
+
+class Creneau{
+  - dateHeureDebut : Date
+  - dateHeureFin : Date
+  - estLibre : boolean
+}
+
+class RendezVous{
+  - dateCreation : Date
+  - statut : string
+}
+
+Utilisateur <|-- Medecin
+Utilisateur <|-- Patient
+
+' Le medecin POSSÈDE des créneaux (Composition forte optionnelle, ici association simple)
+Medecin "1" --> "*" Creneau
+
+' Un patient a un historique de RDV
+Patient "1" --> "*" RendezVous
+
+' Un RDV bloque un créneau spécifique
+RendezVous "1" --> "1" Creneau
+
+@enduml

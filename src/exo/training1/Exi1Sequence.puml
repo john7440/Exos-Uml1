@@ -1,0 +1,39 @@
+@startuml
+actor Patient
+participant "Contrôleur" as App
+participant "Base de Données" as DB
+
+Patient -> App : Demande réservation
+activate App
+
+' --- Étape 1 : Vérification ---
+App -> DB : getCreneau()
+activate DB
+DB --> App : Statut du créneau
+deactivate DB
+
+' --- Étape 2 : Décision ---
+alt Créneau disponible
+
+    ' Mise à jour
+    App -> DB : UPDATE statut = Occupé
+    activate DB
+    DB --> App : OK
+    deactivate DB
+
+    ' Création du RDV
+    App -> DB : INSERT RendezVous
+    activate DB
+    DB --> App : OK
+    deactivate DB
+
+    App --> Patient : Confirmation RDV
+
+else Créneau indisponible
+
+    App --> Patient : Erreur : Indisponible
+
+end
+
+deactivate App
+@enduml
